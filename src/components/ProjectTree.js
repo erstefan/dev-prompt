@@ -1,29 +1,31 @@
 import React from "react";
+import {connect} from "react-redux";
+import {Link} from "react-router-dom";
+
 
 class ProjectTree extends React.Component {
-  state = {
-    projects: []
-  };
+  // state = {
+  //   projects: []
+  // };
 
-  static getDerivedStateFromProps(nextProps, prevState) {
-    if (nextProps.projects !== prevState.projects) {
-      return {
-        projects: nextProps.projects
-      }
-    }
-  }
+  // static getDerivedStateFromProps(nextProps, prevState) {
+  //   if (nextProps.projects !== prevState.projects) {
+  //     return {
+  //       projects: nextProps.projects
+  //     }
+  //   }
+  // }
   render() {
-    const { projects } = this.state;
-
+    const { projects } = this.props;
     return (
       <div style={styles.container}>
         <h3 style={styles.heading}>ALL PROJECTS</h3>
         {projects && projects.map(project =>
-          <div key={project.id} style={styles.project}>
+          <Link to={`project/${project.id}`} key={project.id} style={styles.project}>
             <span style={styles.projectName}>{project.name}</span>
             {/*<span style={styles.projectPath}>{project.path}</span>*/}
             <span style={styles.projectPath}>{project.path.substr(0, 20)}...</span>
-          </div>)}
+          </Link>)}
       </div>
     )
   }
@@ -65,4 +67,5 @@ const styles = {
     color: '#aaa'
   },
 };
-export default ProjectTree;
+
+export default connect()(ProjectTree);
