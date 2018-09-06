@@ -7,6 +7,7 @@ const isDev = require("electron-is-dev");
 
 let mainWindow;
 
+
 require("update-electron-app")({
   repo: "kitze/react-electron-example",
   updateInterval: "1 hour"
@@ -19,6 +20,20 @@ function createWindow() {
       ? "http://localhost:3000"
       : `file://${path.join(__dirname, "../build/index.html")}`
   );
+
+
+  // Open the DevTools.
+  mainWindow.webContents.openDevTools();
+
+  // Using require
+  const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+
+  installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
+    console.log(`Added Extension:  ${name}`);
+  })
+    .catch((err) => {
+      console.log('An error occurred: ', err);
+    });
   mainWindow.on("closed", () => (mainWindow = null));
 }
 

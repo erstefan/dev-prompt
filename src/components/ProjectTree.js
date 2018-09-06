@@ -1,0 +1,68 @@
+import React from "react";
+
+class ProjectTree extends React.Component {
+  state = {
+    projects: []
+  };
+
+  static getDerivedStateFromProps(nextProps, prevState) {
+    if (nextProps.projects !== prevState.projects) {
+      return {
+        projects: nextProps.projects
+      }
+    }
+  }
+  render() {
+    const { projects } = this.state;
+
+    return (
+      <div style={styles.container}>
+        <h3 style={styles.heading}>ALL PROJECTS</h3>
+        {projects && projects.map(project =>
+          <div key={project.id} style={styles.project}>
+            <span style={styles.projectName}>{project.name}</span>
+            {/*<span style={styles.projectPath}>{project.path}</span>*/}
+            <span style={styles.projectPath}>{project.path.substr(0, 20)}...</span>
+          </div>)}
+      </div>
+    )
+  }
+};
+
+const styles = {
+
+  heading: {
+    fontSize: '12px',
+    fontWeight: '600',
+    marginLeft: '20px',
+    letterSpacing: '1px',
+    color: '#aaa'
+  },
+  container: {
+    display: 'flex',
+    flexDirection: 'column',
+    marginTop: '50px',
+  },
+  project: {
+    paddingTop: '15px',
+    paddingBottom: '15px',
+    backgroundColor: '#fff',
+    borderTop: '1px solid #DDEAED',
+    borderBottom: '1px solid #DDEAED',
+    paddingLeft: '20px',
+    paddingRight: '10px',
+  },
+  projectName: {
+    display: 'block',
+    fontSize: '14px',
+    fontWeight: '500',
+    marginBottom: '5px'
+  },
+  projectPath: {
+    display: 'block',
+    fontSize: '12px',
+    fontWeight: '300',
+    color: '#aaa'
+  },
+};
+export default ProjectTree;
