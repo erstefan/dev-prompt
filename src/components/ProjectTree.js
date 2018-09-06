@@ -21,7 +21,7 @@ class ProjectTree extends React.Component {
       <div style={styles.container}>
         <h3 style={styles.heading}>ALL PROJECTS</h3>
         {projects && projects.map(project =>
-          <Link to={`project/${project.id}`} key={project.id} style={styles.project}>
+          <Link to={`/project/${project.id}`} key={project.id} style={styles.project}>
             <span style={styles.projectName}>{project.name}</span>
             {/*<span style={styles.projectPath}>{project.path}</span>*/}
             <span style={styles.projectPath}>{project.path.substr(0, 20)}...</span>
