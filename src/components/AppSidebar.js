@@ -19,22 +19,18 @@ class AppSidebar extends React.Component {
       name: project_name,
       path: path[0]
     };
-
-    // this.setState(prevState => ({projects: [...prevState.projects, project] }));
-
     this.props.importProject(project);
   };
 
 	render() {
 	  const { projects } = this.props;
-	  console.log(projects);
-
+    console.log("got all projects",projects);
 	  return (<AppSidebarWrapper>
       <div style={styles.container}>
         <div className="projects-container">
           {projects && <ProjectTree projects={projects} />}
         </div>
-        <button style={styles.createProject} onClick={this.handleClick}>Add project</button>
+        <button style={styles.createProject} onClick={this.handleClick.bind(this)}>Add project</button>
       </div>
     </AppSidebarWrapper>);
 	}

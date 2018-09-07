@@ -6,6 +6,9 @@ import {store, history} from "./store";
 import {Provider} from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { ConnectedRouter } from 'connected-react-router';
+import dotenv from "dotenv";
+
+dotenv.config();
 
 ReactDOM.render((
   <Provider store={store}>
