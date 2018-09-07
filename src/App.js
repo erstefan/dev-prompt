@@ -2,9 +2,11 @@ import React, {Component} from 'react';
 import './App.css';
 import {AppContent, AppContainer} from "./styles/base";
 import AppSidebar from "./components/AppSidebar";
-import {Route} from "react-router-dom";
+import {Route, withRouter} from "react-router-dom";
 import Home from "./components/Home";
 import Project from "./components/Project";
+import Register from "./components/Register";
+import * as routes from "./constants/routes";
 
 // const {app} = window.require('electron').remote;
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
@@ -14,15 +16,17 @@ class App extends Component {
     return (
       <div className="app">
         <AppContainer>
-          <AppSidebar/>
-          <AppContent>
-            <Route exact path="/" component={Home}/>
-            <Route exact path="/project/:id" component={Project}/>
-          </AppContent>
+          <Route exact path="/" component={Home}/>
+          <Route path="/project/:id" component={Project}/>
+          <Route path={routes.REGISTER} component={Register}/>
+          {/*<AppSidebar/>*/}
+          {/*<AppContent>*/}
+
+          {/*</AppContent>*/}
         </AppContainer>
       </div>
     );
   }
 }
 
-export default App;
+export default withRouter(App);

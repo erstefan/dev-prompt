@@ -15,7 +15,7 @@ const AppContent = styled.div`
 `;
 
 const AppContainer = styled.div`
-  display: flex;
+  
 `;
 
 export {

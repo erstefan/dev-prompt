@@ -7,6 +7,7 @@ import {Provider} from "react-redux";
 import { Switch, Route } from "react-router-dom";
 import { ConnectedRouter } from 'connected-react-router';
 import dotenv from "dotenv";
+import 'semantic-ui-css/semantic.min.css';
 
 dotenv.config();
 
