@@ -4,17 +4,6 @@ import {Link} from "react-router-dom";
 
 
 class ProjectTree extends React.Component {
-  // state = {
-  //   projects: []
-  // };
-
-  // static getDerivedStateFromProps(nextProps, prevState) {
-  //   if (nextProps.projects !== prevState.projects) {
-  //     return {
-  //       projects: nextProps.projects
-  //     }
-  //   }
-  // }
   render() {
     const { projects } = this.props;
     return (
@@ -23,7 +12,6 @@ class ProjectTree extends React.Component {
         {projects && projects.map(project =>
           <Link to={`/project/${project.id}`} key={project.id} style={styles.project}>
             <span style={styles.projectName}>{project.name}</span>
-            {/*<span style={styles.projectPath}>{project.path}</span>*/}
             <span style={styles.projectPath}>{project.path.substr(0, 20)}...</span>
           </Link>)}
       </div>
