@@ -2,10 +2,7 @@ import styled from "styled-components";
 import {brand} from "./colors";
 
 const DashboardHeader = styled.div`
-  // background: #1794ff;
-  // background: #f0f0f0;
-  // background: #EDF5F7;
-  // background: linear-gradient(to bottom, #fff 50%, #F5F9FA);
+  margin-top: 15px;
   height: 60px;
   border-bottom: 1px solid #E1EBED;
   padding: 10px 15px;
@@ -52,7 +49,7 @@ const ProjectsWrapper = styled.div`
   position: relative;
   height: 86vh;
   flex-direction: column;
-  justify-content: space-evenly;
+  justify-content: ${props => props.userHasNoProjects ? 'space-evenly' : 'flex-start'};
   
   .intro {
     text-align: center;
@@ -90,7 +87,30 @@ const ProjectsWrapper = styled.div`
 `;
 
 
+const ProjectItemStyled = styled.div`
+  border-bottom: 1px solid #E1EBED;
+  padding: 20px 20px;
+  cursor: pointer;
+  background: #fff;
+  
+  h3 {
+    font-size: 16px;
+    font-family: 'Montserrat', Arial;
+    font-weight: 700;
+    margin-top: 0;
+    margin-bottom: 5px;
+    text-shadow: 0 1px 0 #fff;
+  }
+  
+  span.project__path {
+    font-size: 12px;
+    color: #aaa;
+    text-shadow: 0 1px 0 #fff;
+  }
+  
+`;
 export {
   DashboardHeader,
-  ProjectsWrapper
+  ProjectsWrapper,
+  ProjectItemStyled,
 }

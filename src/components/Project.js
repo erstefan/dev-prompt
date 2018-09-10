@@ -1,6 +1,9 @@
 import React from "react";
 import {connect} from "react-redux";
 import {deleteProject} from "../actions/projectActions";
+import * as routes from "../constants/routes";
+import {Link} from "react-router-dom";
+import AppHeader from "./AppHeader";
 
 
 class Project extends React.Component {
@@ -18,9 +21,7 @@ class Project extends React.Component {
 
 	getProject = id => {
     const {projects} = this.props;
-    console.log('this.getProject();', projects);
     const project = projects.filter(project => project.id === id);
-    console.log('project detail', project);
     this.setState({ project: project[0] });
   };
 
@@ -29,31 +30,27 @@ class Project extends React.Component {
 		this.getProject(id)
 	}
 	render() {
-
 	  const project = this.state.project;
-    console.log('KKKKKKK', project);
-
+	  console.log("props", this.props);
       return (
-        project ? <div style={{ padding: '25px' }}>
-          <button onClick={this.handleDeleteProject}>Delete</button>
-          <h3>{project.name}</h3>
-          <span>{project.path}</span>
-        </div> : <div>nada</div>
+        <div>
+          <AppHeader avatar={this.props.user.photoURL} />
+
+          {project ? <div style={{ padding: '25px' }}>
+            <button onClick={this.handleDeleteProject}>Delete</button>
+            {/*<Link to={routes.DASHBOARD}>Back to dashboard</Link>*/}
+            <button onClick={() => this.props.history.replace('/dashboard')}>Back to dashboard</button>
+            <h3>{project.name}</h3>
+            <span>{project.path}</span>
+          </div> : <div>nada</div>}
+        </div>
       );
-
-
-    // return (projects ? <div style={{ padding: '25px' }}>
-    //   <button onClick={this.handleDeleteProject(project.id)}>Delete</button>
-    //   <h3>{project.name}</h3>
-    //   <span>{project.path}</span>
-    // </div> : <div>Not loaded yet.</div>)
-
-
 	}
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects.projects
+  projects: state.projects.projects,
+  user: state.user.user
 });
 
 export default connect(mapStateToProps, {deleteProject})(Project);

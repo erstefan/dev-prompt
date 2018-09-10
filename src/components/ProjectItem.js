@@ -1,14 +1,23 @@
 import React from "react";
 import PropTypes from "prop-types";
+import {ProjectItemStyled} from "../styles/dashboard";
 
-const ProjectItem = ({ project }) => {
+const ProjectItem = ({ project, history }) => {
+
+  let viewDetailedProject = () => {
+    history.push(`/project/${project.id}`);
+  };
   return (
-    <div>{project.name}</div>
+    <ProjectItemStyled onClick={viewDetailedProject}>
+      <h3 className="project__name">{project.name}</h3>
+      <span className="project__path">{project.path}</span>
+    </ProjectItemStyled>
   )
 };
 
 ProjectItem.propTypes = {
-  project: PropTypes.object.isRequired
+  project: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export default ProjectItem;

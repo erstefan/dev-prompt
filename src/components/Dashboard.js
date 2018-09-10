@@ -6,6 +6,7 @@ import {DashboardHeader, ProjectsWrapper} from "../styles/dashboard";
 import {brand} from "../styles/colors";
 import DashboardIntro from "./DashboardIntro";
 import ProjectItem from "./ProjectItem";
+import AppHeader from "./AppHeader";
 
 
 class Dashboard extends React.Component {
@@ -22,28 +23,16 @@ class Dashboard extends React.Component {
   };
 
 	render() {
-	  const { user, projects } = this.props;
+	  const { user, projects, history } = this.props;
 	  const noProjects = projects && projects.length < 1;
 		return (
       <div>
-        <br/>
-        <DashboardHeader>
-          <div className="header__title">
-            <h3>TermDocker</h3>
-          </div>
-
-          <div className="user__card">
-            {/*<span className="user-name">{user.name.split(' ')[0]}</span>*/}
-            <div className="user-photo">
-              <Image floated='right' size='mini' style={{ borderRadius: '50px'}} src={user.photoURL} />
-            </div>
-          </div>
-        </DashboardHeader>
-        <ProjectsWrapper>
+        <AppHeader avatar={user.photoURL} />
+        <ProjectsWrapper style={{ justifyContent: `${noProjects ? 'space-evenly' : 'flex-start'}`}}>
 
           {noProjects && <DashboardIntro user={user} handleAddProject={this.handleAddProject}/>}
 
-          { projects && projects.map(project => <ProjectItem project={project} key={project.id} />)}
+          { projects && projects.map(project => <ProjectItem project={project} key={project.id} history={history}/>)}
         </ProjectsWrapper>
         {/*<Button onClick={this.signOut}><Icon name='sign out' />Sign out</Button>*/}
       </div>
