@@ -1,13 +1,24 @@
 import React from "react";
 import LoginForm from "./LoginForm";
-import {withRouter} from "react-router-dom";
-import {Button, Divider, Segment} from "semantic-ui-react";
+import {connect} from "react-redux";
+import {loginUser} from "../actions/loginActions";
 
-const Home = () => (
-  <div>
-    <br/><br/><br/>
-    <LoginForm />
-  </div>
-);
+const Home = ({
+  history,
+  loginUser,
+  auth,
+}) => {
+  return (
+    <div>
+      <br/><br/><br/>
+      <LoginForm history={history} loginUser={loginUser} user={auth}/>
+    </div>
+  )
 
-export default withRouter(Home);
+};
+
+const mapStateToProps = state => ({
+  auth: state.auth
+});
+
+export default connect(mapStateToProps, { loginUser })(Home);

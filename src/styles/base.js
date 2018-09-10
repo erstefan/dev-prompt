@@ -11,11 +11,11 @@ const AppSidebarWrapper = styled.div`
 
 const AppContent = styled.div`
   width: 65%;
-  height: 100vh;
 `;
 
 const AppContainer = styled.div`
-  
+  flex: 1;
+  height: 100vh;
 `;
 
 export {

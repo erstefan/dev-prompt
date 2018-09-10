@@ -1,12 +1,16 @@
-import firebase from "firebase";
-
+import * as firebase from 'firebase/app';
+import 'firebase/auth';
+import 'firebase/database';
+import {
+  config
+} from "../config";
 const devConfig = {
-  apiKey: process.env.FIREBASE_API_KEY,
-  authDomain: process.env.AUTH_DOMAIN,
-  databaseURL: process.env.DATABASE_URL,
-  projectId: process.env.PROJECT_ID,
-  storageBucket: process.env.STORAGE_BUCKET,
-  messagingSenderId: process.env.MESSAGING_SENDER_ID
+  apiKey: `${config.firebase.FIREBASE_API_KEY}`,
+  authDomain: `${config.firebase.AUTH_DOMAIN}`,
+  databaseURL: `${config.firebase.DATABASE_URL}`,
+  projectId: `${config.firebase.PROJECT_ID}`,
+  storageBucket: `${config.firebase.STORAGE_BUCKET}`,
+  messagingSenderId: `${config.firebase.MESSAGING_SENDER_ID}`
 };
 
 const prodConfig = {
@@ -16,17 +20,23 @@ const prodConfig = {
 if (!firebase.apps.length) {
   firebase.initializeApp(devConfig);
 }
+const githubProvider = new firebase.auth.GithubAuthProvider();
+// var provider = new firebase.auth.GithubAuthProvider();
 
-const config = process.env.NODE_ENV === 'production'
-  ? prodConfig
-  : devConfig;
+const conf = process.env.NODE_ENV === 'production' ?
+  prodConfig :
+  devConfig;
 
 if (!firebase.apps.length) {
-  firebase.initializeApp(config);
+  firebase.initializeApp(conf);
 }
 
 const auth = firebase.auth();
-
+const db = firebase.database();
+const fb = firebase;
 export {
   auth,
-};
+  githubProvider,
+  fb,
+  db
+}

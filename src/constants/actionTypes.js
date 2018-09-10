@@ -8,3 +8,18 @@ export const PROJECT_DELETE = 'PROJECT_DELETE';
 export const PROJECT_ADD_REQUEST = 'PROJECT_ADD_REQUEST';
 export const PROJECT_ADD_SUCCESS = 'PROJECT_ADD_SUCCESS';
 export const PROJECT_ADD_FAILURE = 'PROJECT_ADD_FAILURE';
+
+
+/**
+ * Auth
+ * @type {string}
+ */
+export const SIGNUP_REQUEST = "SIGNUP_REQUEST";
+export const SIGNUP_SUCCESS = 'SIGNUP_SUCCESS';
+export const SIGNUP_ERROR = 'SIGNUP_ERROR';
+
+export const LOGIN_REQUEST = 'LOGIN_REQUEST';
+export const LOGIN_SUCCESS = 'LOGIN_SUCCESS';
+export const LOGIN_ERROR = 'LOGIN_ERROR';
+
+export const LOGOUT_SUCCESS = 'LOGOUT_SUCCESS';

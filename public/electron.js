@@ -14,7 +14,11 @@ require("update-electron-app")({
 });
 
 function createWindow() {
-  mainWindow = new BrowserWindow({ width: 550, height: 680 });
+  mainWindow = new BrowserWindow({
+    width: 550,
+    height: 680,
+    titleBarStyle: 'hidden'
+  });
   mainWindow.loadURL(
     isDev
       ? "http://localhost:3000"
@@ -26,14 +30,16 @@ function createWindow() {
   mainWindow.webContents.openDevTools();
 
   // Using require
-  const { default: installExtension, REACT_DEVELOPER_TOOLS } = require('electron-devtools-installer');
+  const {default: installExtension, REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS} = require('electron-devtools-installer');
 
-  installExtension(REACT_DEVELOPER_TOOLS).then((name) => {
-    console.log(`Added Extension:  ${name}`);
-  })
+  [REACT_DEVELOPER_TOOLS, REDUX_DEVTOOLS].forEach(extension => {
+    installExtension(extension).then((name) => {
+      console.log(`Added Extension:  ${name}`);
+    })
     .catch((err) => {
       console.log('An error occurred: ', err);
     });
+  });
   mainWindow.on("closed", () => (mainWindow = null));
 }
 
