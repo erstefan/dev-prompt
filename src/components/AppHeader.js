@@ -4,6 +4,8 @@ import {Button, Dropdown, Image} from "semantic-ui-react";
 import PropTypes from "prop-types"
 import {connect} from "react-redux";
 import {logout} from "../actions/loginActions";
+import {Link} from "react-router-dom";
+import * as routes from "../constants/routes";
 
 class AppHeader extends React.Component {
   constructor(props){
@@ -16,7 +18,9 @@ class AppHeader extends React.Component {
     return (
       <DashboardHeader>
         <div className="header__title">
-          <h3>TermDocker</h3>
+          <Link to={routes.DASHBOARD}>
+            <h3>TermDocker</h3>
+          </Link>
         </div>
 
         <div className="user__card">
@@ -25,6 +29,7 @@ class AppHeader extends React.Component {
             <Dropdown.Menu>
               <Dropdown.Item icon='folder' text='Add project' />
               <Dropdown.Item icon='sign out' text='Sign out' onClick={() => this.props.logout()} />
+              <Dropdown.Item icon='edit' text='Edit profile' as={Link} to={routes.EDIT_PROFILE} />
             </Dropdown.Menu>
           </Dropdown>
         </div>

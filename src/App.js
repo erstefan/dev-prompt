@@ -11,6 +11,7 @@ import Dashboard from "./components/Dashboard";
 import { fb } from "./firebase/firebase";
 import {loginUser} from "./actions/loginActions";
 import {connect} from "react-redux";
+import EditProfile from "./components/EditProfile";
 // const {app} = window.require('electron').remote;
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
 
@@ -37,6 +38,7 @@ class App extends Component {
         <AppContainer>
           <Route exact path="/" component={Home}/>
           <Route exact path="/project/:id" component={Project}/>
+          <Route exact path={routes.EDIT_PROFILE} component={EditProfile}/>
           <Route path={routes.REGISTER} component={Register}/>
           <Route path={routes.DASHBOARD} component={Dashboard}/>
         </AppContainer>
