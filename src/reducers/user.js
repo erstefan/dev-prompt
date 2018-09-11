@@ -26,15 +26,16 @@ const userReducer = (state = initialState, action) => {
     case actions.LOGIN_ERROR:
       return {...state, fetching: false, error: action.error};
 
-    case actions.LOGOUT_SUCCESS:
+    case actions.LOGOUT:
       return {
-        ...state,
+        fetching: false,
         loggedIn: false,
         user: {
           name: '',
           photoURL: '',
           email: ''
-        }
+        },
+        error: ''
       };
 
     default:

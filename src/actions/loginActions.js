@@ -1,13 +1,23 @@
 import {
   LOGIN_REQUEST,
-  LOGIN_SUCCESS,
-  LOGIN_ERROR
+  LOGIN_SUCCESS, LOGOUT
 } from '../constants/actionTypes';
+import { auth } from "../firebase/firebase";
+import * as routes from "../constants/routes";
+import { store } from "../store";
+import { push } from "connected-react-router";
 
 export const loginRequest = () => {
   return {
     type: LOGIN_REQUEST
   };
+};
+
+export const logoutRequest = () => ({ type: LOGOUT });
+
+export const logout = history => dispatch => {
+  dispatch(logoutRequest());
+  auth.signOut().then(() => store.dispatch(push(routes.HOME)))
 };
 
 export const loginSuccessResponse = (data) => {

@@ -36,7 +36,7 @@ class App extends Component {
         </div>
         <AppContainer>
           <Route exact path="/" component={Home}/>
-          <Route path="/project/:id" component={Project}/>
+          <Route exact path="/project/:id" component={Project}/>
           <Route path={routes.REGISTER} component={Register}/>
           <Route path={routes.DASHBOARD} component={Dashboard}/>
         </AppContainer>
