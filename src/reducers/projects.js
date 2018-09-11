@@ -4,8 +4,8 @@ export default (state = {
   projects: [
     {
       id: "fbe0d188-d70b-4447-93b9-8ac6e8916ffb",
-      name: "VirusAway",
-      path: "/Users/stefan/Documents/VirusAway"
+      name: "TermDocker",
+      path: "/Users/stefan/Documents/TermDocker"
     }
   ]
 }, action) => {

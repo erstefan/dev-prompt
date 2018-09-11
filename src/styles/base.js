@@ -1,5 +1,10 @@
 import styled from "styled-components";
 
+export const font = {
+  heading: 'Varela Round, Helvetica Neue, Arial, sans-serif',
+  body: 'Montserrat, Helvetica Neue, Arial, san-serif'
+};
+
 const AppSidebarWrapper = styled.div`
   // background: #1794ff;
   // background: #f0f0f0;

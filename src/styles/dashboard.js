@@ -1,8 +1,9 @@
 import styled from "styled-components";
 import {brand} from "./colors";
+import {font} from "./base";
 
 const DashboardHeader = styled.div`
-  margin-top: 15px;
+  margin-top: 20px;
   height: 60px;
   border-bottom: 1px solid #E1EBED;
   padding: 10px 15px;
@@ -55,13 +56,15 @@ const ProjectsWrapper = styled.div`
     text-align: center;
     
     h1 {
-      font-size: 30px;
+      font-family: ${font.heading};
+      font-size: 36px;
       font-weight: 300;
       color: ${brand.primary}
       text-shadow: 0 1px 0 #fff;
     }
     h3 {
       margin-top: 0;
+      font-family: ${font.heading};
       font-size: 26px;
       font-weight: 300;
       text-shadow: 0 1px 0 #fff;
@@ -88,6 +91,7 @@ const ProjectsWrapper = styled.div`
 
 
 const ProjectItemStyled = styled.div`
+  border-top: 1px solid #E1EBED;
   border-bottom: 1px solid #E1EBED;
   padding: 20px 20px;
   cursor: pointer;
