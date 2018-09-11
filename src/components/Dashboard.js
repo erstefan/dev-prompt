@@ -1,5 +1,4 @@
 import React from "react";
-import {fb, auth} from "../firebase/firebase";
 import {connect} from "react-redux";
 import {ProjectsWrapper} from "../styles/dashboard";
 import DashboardIntro from "./DashboardIntro";
@@ -8,16 +7,8 @@ import AppHeader from "./AppHeader";
 
 
 class Dashboard extends React.Component {
-	constructor(props) {
-		super(props);
-	}
-
-  signOut = () => {
-    fb.auth().signOut();
-  };
-
   handleAddProject = () => {
-
+    console.log('Add new project');
   };
 
 	render() {

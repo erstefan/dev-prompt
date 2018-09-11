@@ -1,15 +1,13 @@
 import React from "react";
 import {
-  Container,
-  Divider,
-  Header
+  Container
 } from "semantic-ui-react";
 import {auth} from "../firebase/firebase";
 import {githubProvider} from "../firebase/firebase";
 import "firebaseui/dist/firebaseui.css";
 import StyledFirebaseAuth from "react-firebaseui/StyledFirebaseAuth";
 
-const LoginForm = ({history, loginUser, user}) => {
+const LoginForm = ({history, loginUser}) => {
   const uiConfig = {
     signInFlow: "redirect",
     signInOptions: [

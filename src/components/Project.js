@@ -1,8 +1,6 @@
 import React from "react";
 import {connect} from "react-redux";
 import {deleteProject} from "../actions/projectActions";
-import * as routes from "../constants/routes";
-import {Link} from "react-router-dom";
 import AppHeader from "./AppHeader";
 
 
@@ -38,7 +36,6 @@ class Project extends React.Component {
 
           {project ? <div style={{ padding: '25px' }}>
             <button onClick={this.handleDeleteProject}>Delete</button>
-            {/*<Link to={routes.DASHBOARD}>Back to dashboard</Link>*/}
             <button onClick={() => this.props.history.replace('/dashboard')}>Back to dashboard</button>
             <h3>{project.name}</h3>
             <span>{project.path}</span>

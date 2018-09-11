@@ -1,10 +1,10 @@
 import React from "react";
 import {DashboardHeader} from "../styles/dashboard";
-import {Button, Dropdown, Icon, Image} from "semantic-ui-react";
+import {Button, Dropdown, Image} from "semantic-ui-react";
 import PropTypes from "prop-types";
 
 const AppHeader = ({ avatar }) => {
-  let trigger = <span><Image floated='right' size='mini' style={{ borderRadius: '50px'}} src={avatar} /></span>
+  let trigger = <span><Image floated='right' size='mini' style={{ borderRadius: '50px'}} src={avatar} /></span>;
 
   return (
     <DashboardHeader>
@@ -21,10 +21,6 @@ const AppHeader = ({ avatar }) => {
           </Dropdown.Menu>
         </Dropdown>
       </div>
-        {/*<div className="user-photo">*/}
-          {/*<Image floated='right' size='mini' style={{ borderRadius: '50px'}} src={avatar} />*/}
-        {/*</div>*/}
-
     </DashboardHeader>
   )
 };
