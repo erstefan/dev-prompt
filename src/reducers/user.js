@@ -14,7 +14,8 @@ const initialState = {
 const userReducer = (state = initialState, action) => {
   switch(action.type) {
     case actions.LOGIN_SUCCESS:
-      return {...state,
+      return {
+        ...state,
         error: '',
         loggedIn: true,
         user: {

@@ -6,6 +6,7 @@ import {connect} from "react-redux";
 import {logout} from "../actions/loginActions";
 import {Link} from "react-router-dom";
 import * as routes from "../constants/routes";
+import {brand} from "../styles/colors";
 
 class AppHeader extends React.Component {
   constructor(props){
@@ -24,7 +25,7 @@ class AppHeader extends React.Component {
         </div>
 
         <div className="user__card">
-          <Button size={"mini"} icon={"plus"} />
+          <Button size={"mini"} basic icon={"plus"} onClick={this.props.addProject} />
           <Dropdown trigger={trigger} pointing='top right' icon={null}>
             <Dropdown.Menu>
               <Dropdown.Item icon='folder' text='Add project' />
@@ -39,7 +40,8 @@ class AppHeader extends React.Component {
 }
 
 AppHeader.propTypes = {
-  avatar: PropTypes.string.isRequired
+  avatar: PropTypes.string.isRequired,
+  addProject: PropTypes.func.isRequired
 };
 
 export default connect(null, {logout})(AppHeader);

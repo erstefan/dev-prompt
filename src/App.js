@@ -37,14 +37,21 @@ class App extends Component {
         </div>
         <AppContainer>
           <Route exact path="/" component={Home}/>
-          <Route exact path="/project/:id" component={Project}/>
-          <Route exact path={routes.EDIT_PROFILE} component={EditProfile}/>
-          <Route path={routes.REGISTER} component={Register}/>
-          <Route path={routes.DASHBOARD} component={Dashboard}/>
+          {this.props.loggedIn && (
+            <React.Fragment>
+            <Route exact path="/project/:id" component={Project}/>
+            <Route exact path={routes.EDIT_PROFILE} component={EditProfile}/>
+            <Route path={routes.REGISTER} component={Register}/>
+            <Route path={routes.DASHBOARD} component={Dashboard}/>
+          </React.Fragment>
+          )}
         </AppContainer>
       </div>
     );
   }
 }
 
-export default withRouter(connect(null, {loginUser})(App));
+const mapStateToProps = state => ({
+  loggedIn: state.user.loggedIn
+});
+export default withRouter(connect(mapStateToProps, {loginUser})(App));

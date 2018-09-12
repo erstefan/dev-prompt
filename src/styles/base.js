@@ -23,8 +23,17 @@ const AppContainer = styled.div`
   height: 100vh;
 `;
 
+const SmallHeading = styled.span`
+  text-transform: uppercase;
+  font-family: ${font.body};
+  font-weight: 600;
+  font-size: 12px;
+  color: ${props => props.color || '#222'};
+`;
+
 export {
   AppSidebarWrapper,
   AppContent,
+  SmallHeading,
   AppContainer
 }

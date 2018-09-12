@@ -1,6 +1,7 @@
 import styled from "styled-components";
 import {brand} from "./colors";
 import {font} from "./base";
+import * as color from "color";
 
 const DashboardHeader = styled.div`
   margin-top: 20px;
@@ -48,7 +49,8 @@ const ProjectsWrapper = styled.div`
   flex: 1;
   height: 100%;
   position: relative;
-  height: 86vh;
+  height: 80vh;
+  overflow:hidden;
   flex-direction: column;
   justify-content: ${props => props.userHasNoProjects ? 'space-evenly' : 'flex-start'};
   
@@ -87,6 +89,23 @@ const ProjectsWrapper = styled.div`
       }
     }
   }
+  
+  .dashboard-header {
+    padding: 30px 15px;
+    margin-bottom: 15px;
+    // background: #fff;
+    border-bottom: 1px solid #E1EBED;
+    h3 {
+      margin-top: 10px;
+      font-size: 24px;
+      color: ${brand.primary};
+      font-family: ${font.heading};
+      margin-bottom: 5px;
+    }
+    p {
+      color: #aaa;
+    }
+  }
 `;
 
 
@@ -96,6 +115,12 @@ const ProjectItemStyled = styled.div`
   padding: 20px 20px;
   cursor: pointer;
   background: #fff;
+  max-width: 95%; 
+  width: 100%;
+  margin-left: auto;
+  margin-right: auto;
+  box-shadow: 0 0 8px #E1EBED;
+  border-radius: 10px;
   
   h3 {
     font-size: 16px;

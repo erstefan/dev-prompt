@@ -1,18 +1,23 @@
-import {PROJECT_ADD_SUCCESS, PROJECT_DELETE, PROJECTS_GET_ALL, PROJECTS_GET_SINGLE} from "../constants/actionTypes";
+import {
+  PROJECT_ADD_REQUEST, PROJECT_ADD_SUCCESS, PROJECT_DELETE,
+  PROJECTS_GET_SINGLE, PROJECTS_REQUEST, PROJECTS_SUCCESS
+} from "../constants/actionTypes";
 
 export default (state = {
-  projects: [
-    {
-      id: "fbe0d188-d70b-4447-93b9-8ac6e8916ffb",
-      name: "TermDocker",
-      path: "/Users/stefan/Documents/TermDocker"
-    }
-  ]
+  pending: false,
+  data: []
 }, action) => {
   switch (action.type) {
-    case PROJECTS_GET_ALL:
+    case PROJECTS_SUCCESS:
       return {
-        projects: state.projects,
+        pending: false,
+        data: [...action.payload]
+      };
+
+    case PROJECTS_REQUEST:
+      return {
+        ...state,
+        pending: true,
       };
 
     case PROJECTS_GET_SINGLE:
@@ -26,9 +31,15 @@ export default (state = {
         projects: state.projects.filter(project => project.id !== action.payload)
       };
 
+    case PROJECT_ADD_REQUEST:
+      return {
+        ...state,
+        pending: true,
+      };
     case PROJECT_ADD_SUCCESS:
       return {
-        projects: [...state.projects, action.payload.project]
+        pending: false,
+        ...state
       };
     default:
       return state;

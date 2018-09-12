@@ -19,7 +19,7 @@ class Project extends React.Component {
 
 	getProject = id => {
     const {projects} = this.props;
-    const project = projects.filter(project => project.id === id);
+    const project = projects.filter(project => project.key === id);
     this.setState({ project: project[0] });
   };
 
@@ -29,7 +29,6 @@ class Project extends React.Component {
 	}
 	render() {
 	  const project = this.state.project;
-	  console.log("props", this.props);
       return (
         <div>
           <AppHeader avatar={this.props.user.photoURL} />
@@ -46,7 +45,7 @@ class Project extends React.Component {
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects.projects,
+  projects: state.projects.data,
   user: state.user.user
 });
 
