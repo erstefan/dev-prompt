@@ -5,7 +5,7 @@ import {Button} from "semantic-ui-react";
 
 const ProjectItem = ({ project, history, handleDelete, pending }) => {
   let viewDetailedProject = () => {
-    history.push(`/project/${project.id}`);
+    history.push(`/project/${project.key}`);
   };
 
   return (

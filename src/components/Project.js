@@ -1,50 +1,62 @@
-import React from "react";
-import {connect} from "react-redux";
-import {deleteProject} from "../actions/projectActions";
-import AppHeader from "./AppHeader";
-
+import React from 'react';
+import { connect } from 'react-redux';
+import { deleteProject, getSingleProject } from '../actions/projectActions';
+import { Button, Icon } from 'semantic-ui-react';
+import {
+  Container,
+  ProjectHeaderToolbar,
+  ProjectTitle,
+} from '../styles/project';
 
 class Project extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-      project: []
+      project: [],
     };
   }
 
-	handleDeleteProject = () => {
+  handleDeleteProject = () => {
     let id = this.props.match.params.id;
-	  this.props.deleteProject(id);
+    this.props.deleteProject(id);
   };
 
-	getProject = id => {
-    const {projects} = this.props;
-    const project = projects.filter(project => project.key === id);
-    this.setState({ project: project[0] });
-  };
-
-	componentDidMount() {
+  componentDidMount() {
     let id = this.props.match.params.id;
-		this.getProject(id)
-	}
-	render() {
-	  const project = this.state.project;
-      return (
-        <React.Fragment>
-          {project ? <div style={{ padding: '25px' }}>
-            <button onClick={this.handleDeleteProject}>Delete</button>
-            <button onClick={() => this.props.history.replace('/dashboard')}>Back to dashboard</button>
-            <h3>{project.name}</h3>
-            <span>{project.path}</span>
-          </div> : <div>nada</div>}
-        </React.Fragment>
-      );
-	}
+    this.props.getSingleProject(id);
+  }
+  render() {
+    const { project } = this.props;
+    return (
+      <React.Fragment>
+        {project ? (
+          <React.Fragment>
+            <ProjectHeaderToolbar>
+              <button onClick={() => this.props.history.replace('/dashboard')}>
+                <Icon className={'arrow left'} />
+              </button>
+              <span>{project.projectName}</span>
+              <button onClick={this.handleDeleteProject}>
+                <Icon className={'trash alternate outline'} />
+              </button>
+            </ProjectHeaderToolbar>
+            <Container>
+            </Container>
+          </React.Fragment>
+        ) : (
+          <div>nada</div>
+        )}
+      </React.Fragment>
+    );
+  }
 }
 
 const mapStateToProps = state => ({
-  projects: state.projects.data,
-  user: state.user.user
+  project: state.projects.data[0],
+  user: state.user.user,
 });
 
-export default connect(mapStateToProps, {deleteProject})(Project);
+export default connect(
+  mapStateToProps,
+  { deleteProject, getSingleProject },
+)(Project);

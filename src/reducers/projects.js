@@ -23,7 +23,10 @@ export default (state = {
       };
 
     case PROJECTS_GET_SINGLE:
-      return state.projects[0];
+      return {
+        ...state,
+        data: state.data.filter(project => project.key !== action.payload)
+      };
 
     case PROJECT_DELETE_REQUEST:
       return {
@@ -33,7 +36,7 @@ export default (state = {
     case PROJECT_DELETE_SUCCESS:
       return {
         ...state,
-        projects: state.data.filter(project => project.id !== action.payload)
+        data: state.data.filter(project => project.key !== action.payload)
       };
 
     case PROJECT_DELETE_FAILURE:
