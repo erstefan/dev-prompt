@@ -4,7 +4,7 @@ import {ProjectsWrapper} from "../styles/dashboard";
 import DashboardIntro from "./DashboardIntro";
 import ProjectItem from "./ProjectItem";
 import AppHeader from "./AppHeader";
-import {createProject, getAllProjects} from "../actions/projectActions";
+import {createProject, deleteProject, getAllProjects} from "../actions/projectActions";
 import DashboardLoader from "../DashboardLoader";
 
 
@@ -29,13 +29,16 @@ class Dashboard extends Component {
   	this.props.getAllProjects();
   }
 
+  handleDeleteProject = (projectID) => {
+    setTimeout(() => {
+      this.props.deleteProject(projectID);
+    }, 2500)
+  };
+
   render() {
     const {user, projects, history} = this.props;
     const noProjects = projects.data && projects.data.length < 1;
-    console.log('no projects', noProjects);
-    const mappedProjects = projects.data.map(project => <ProjectItem project={project} key={project.key} history={history}/>);
-    // const mappedProjects = projects.data.length > 0 ? projects.data.map(project => <div>{project.uid}</div>) : <div>yolo</div>;
-    console.log('total', projects.data.length);
+
     return (
       <div>
         <AppHeader addProject={this.handleAddProject} avatar={user.photoURL}/>
@@ -43,7 +46,15 @@ class Dashboard extends Component {
           {projects.pending ? <DashboardLoader/> : (
             <React.Fragment>
               <DashboardIntro user={user} handleAddProject={this.handleAddProject} noProjects={noProjects}/>
-              { projects.data.length > 0 && mappedProjects}
+              { projects.data.length > 0 &&
+              projects.data.map(project =>
+                <ProjectItem
+                  project={project}
+                  pending={projects.pending}
+                  key={project.key}
+                  handleDelete={() => this.handleDeleteProject(project.key)}
+                  history={history}
+                />)}
             </React.Fragment>
           )}
         </ProjectsWrapper>
@@ -57,4 +68,4 @@ const mapStateToProps = state => ({
   projects: state.projects
 });
 
-export default connect(mapStateToProps, {createProject, getAllProjects})(Dashboard);
+export default connect(mapStateToProps, {createProject, deleteProject, getAllProjects})(Dashboard);

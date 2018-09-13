@@ -1,6 +1,7 @@
 import {
-  PROJECTS_GET_SINGLE, PROJECT_ADD_SUCCESS, PROJECT_DELETE,
-  PROJECT_ADD_REQUEST, PROJECTS_SUCCESS, PROJECTS_REQUEST
+  PROJECTS_GET_SINGLE, PROJECT_ADD_SUCCESS,
+  PROJECT_ADD_REQUEST, PROJECTS_SUCCESS, PROJECTS_REQUEST, PROJECT_DELETE_REQUEST, PROJECT_DELETE_SUCCESS,
+  PROJECT_DELETE_FAILURE
 } from "../constants/actionTypes";
 import {auth, db} from "../firebase/firebase";
 import {snapshotToArray} from "../utils";
@@ -26,6 +27,26 @@ export const getSingleProject = id => ({
   }
 });
 
+/**
+ * Retrieve all projects
+ */
+export const getAllProjects = () => dispatch => {
+  dispatch(projectsGetAllRequest());
+  let uid = auth.currentUser !== null && auth.currentUser.uid;
+  const ref = db.ref(`/projects/${uid}`);
+  ref
+    .on('value', snapshot => {
+      let data = snapshot.val();
+
+      if (!data) {
+        return dispatch(projectsGetSuccess([]));
+      }
+
+      let formattedData = snapshotToArray(snapshot);
+      return dispatch(projectsGetSuccess(formattedData));
+    })
+};
+
 /*************************************************
  *
  * Create project
@@ -36,13 +57,6 @@ export const createProjectRequest = () => ({
 
 export const createProjectSuccess = () => ({
   type: PROJECT_ADD_SUCCESS,
-});
-
-export const deleteProject = id => ({
-  type: PROJECT_DELETE,
-  payload: {
-    id
-  }
 });
 
 
@@ -66,22 +80,46 @@ export const createProject = data => dispatch => {
     })
 };
 
-/**
- * Retrieve all projects
+/*************************************************
+ *
+ * Delete project
  */
-export const getAllProjects = () => dispatch => {
-  dispatch(projectsGetAllRequest());
-  let uid = auth.currentUser !== null && auth.currentUser.uid;
+export const deleteProjectRequest = () => ({
+  type: PROJECT_DELETE_REQUEST,
+});
+
+export const deleteProjectSuccess = id => ({
+  type: PROJECT_DELETE_SUCCESS,
+  payload: {
+    id
+  }
+});
+
+export const deleteProjectFailure = err => ({
+  type: PROJECT_DELETE_FAILURE,
+  payload: {
+    err
+  }
+});
+
+export const deleteProject = id => dispatch => {
+  dispatch(deleteProjectRequest());
+
+  const uid = auth.currentUser !== null && auth.currentUser.uid;
+
   db
     .ref(`/projects/${uid}`)
-    .on('value', snapshot => {
-      let data = snapshot.val();
-
-      if (!data) {
-        return dispatch(projectsGetSuccess([]));
-      }
-
-      let formattedData = snapshotToArray(snapshot);
-      return dispatch(projectsGetSuccess(formattedData));
+    .child(id)
+    .remove()
+    .then(() => {
+      setTimeout(() => {
+        dispatch(deleteProjectSuccess(id));
+      }, 1500);
+    })
+    .catch(err => {
+      dispatch(deleteProjectFailure(err));
     })
 };
+
+
+

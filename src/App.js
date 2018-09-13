@@ -12,6 +12,7 @@ import { fb } from "./firebase/firebase";
 import {loginUser} from "./actions/loginActions";
 import {connect} from "react-redux";
 import EditProfile from "./components/EditProfile";
+import {getAllProjects} from "./actions/projectActions";
 // const {app} = window.require('electron').remote;
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
 
@@ -22,7 +23,8 @@ class App extends Component {
     fb.auth().onAuthStateChanged(user => {
       if (user) {
         this.props.loginUser(this.props.history, user);
-        this.props.history.push(DASHBOARD)
+        this.props.history.push(DASHBOARD);
+        // this.props.getAllProjects();
       } else {
         this.props.history.push('/')
       }
@@ -54,4 +56,4 @@ class App extends Component {
 const mapStateToProps = state => ({
   loggedIn: state.user.loggedIn
 });
-export default withRouter(connect(mapStateToProps, {loginUser})(App));
+export default withRouter(connect(mapStateToProps, {loginUser, getAllProjects })(App));

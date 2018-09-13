@@ -91,8 +91,8 @@ const ProjectsWrapper = styled.div`
   }
   
   .dashboard-header {
-    padding: 30px 15px;
-    margin-bottom: 15px;
+    padding: 30px 20px;
+    margin-bottom: 0;
     // background: #fff;
     border-bottom: 1px solid #E1EBED;
     h3 {
@@ -110,18 +110,45 @@ const ProjectsWrapper = styled.div`
 
 
 const ProjectItemStyled = styled.div`
-  border-top: 1px solid #E1EBED;
-  border-bottom: 1px solid #E1EBED;
-  padding: 20px 20px;
-  cursor: pointer;
-  background: #fff;
-  max-width: 95%; 
-  width: 100%;
-  margin-left: auto;
-  margin-right: auto;
-  box-shadow: 0 0 8px #E1EBED;
-  border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 20px 20px;
+    background: #fff;
+    border-bottom: 1px solid #E1EBED;
+    cursor: pointer;
+    
+    
+    
+  // old
+  // border: 3px solid #E1EBED;
+  // padding: 20px 20px;
+  // cursor: pointer;
+  // background: #fff;
+  // max-width: 95%; 
+  // width: 100%;
+  // margin-left: auto;
+  // margin-right: auto;
+  // margin-bottom: 10px;
+  // box-shadow: 0 0 8px #E1EBED;
+  // border-radius: 10px;
   
+  &:hover {
+    background: #fff;
+     h3 {
+      color: ${brand.primary};
+    }
+    div.project-item:not(:hover) {
+      h3 {
+        color: #ccc !important;
+      }
+    }
+   
+    .btn-delete {
+      opacity: 1;
+      display: block;
+    }
+  }
   h3 {
     font-size: 16px;
     font-family: 'Montserrat', Arial;
@@ -135,6 +162,11 @@ const ProjectItemStyled = styled.div`
     font-size: 12px;
     color: #aaa;
     text-shadow: 0 1px 0 #fff;
+  }
+  
+  .btn-delete {
+    opacity: 0;
+    display: none;
   }
   
 `;
