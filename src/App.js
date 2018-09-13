@@ -13,6 +13,7 @@ import {loginUser} from "./actions/loginActions";
 import {connect} from "react-redux";
 import EditProfile from "./components/EditProfile";
 import {getAllProjects} from "./actions/projectActions";
+import AppHeader from "./components/AppHeader";
 // const {app} = window.require('electron').remote;
 window.ELECTRON_DISABLE_SECURITY_WARNINGS = true;
 
@@ -25,8 +26,9 @@ class App extends Component {
         this.props.loginUser(this.props.history, user);
         this.props.history.push(DASHBOARD);
         // this.props.getAllProjects();
+        console.log('logged in');
       } else {
-        this.props.history.push('/')
+
       }
     })
 
@@ -38,6 +40,7 @@ class App extends Component {
           <div className="drag" style={{top: 0, left: 0, width: '100%', height: '100%', position: 'absolute'}}/>
         </div>
         <AppContainer>
+          <AppHeader/>
           <Route exact path="/" component={Home}/>
           {this.props.loggedIn && (
             <React.Fragment>

@@ -40,8 +40,7 @@ class Dashboard extends Component {
     const noProjects = projects.data && projects.data.length < 1;
 
     return (
-      <div>
-        <AppHeader addProject={this.handleAddProject} avatar={user.photoURL}/>
+      <React.Fragment>
         <ProjectsWrapper style={{justifyContent: `${noProjects ? 'space-evenly' : 'flex-start'}`}}>
           {projects.pending ? <DashboardLoader/> : (
             <React.Fragment>
@@ -58,7 +57,7 @@ class Dashboard extends Component {
             </React.Fragment>
           )}
         </ProjectsWrapper>
-      </div>
+      </React.Fragment>
     );
   }
 }

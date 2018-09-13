@@ -30,16 +30,14 @@ class Project extends React.Component {
 	render() {
 	  const project = this.state.project;
       return (
-        <div>
-          <AppHeader avatar={this.props.user.photoURL} />
-
+        <React.Fragment>
           {project ? <div style={{ padding: '25px' }}>
             <button onClick={this.handleDeleteProject}>Delete</button>
             <button onClick={() => this.props.history.replace('/dashboard')}>Back to dashboard</button>
             <h3>{project.name}</h3>
             <span>{project.path}</span>
           </div> : <div>nada</div>}
-        </div>
+        </React.Fragment>
       );
 	}
 }

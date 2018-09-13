@@ -113,6 +113,7 @@ const ProjectItemStyled = styled.div`
     display: flex;
     align-items: center;
     justify-content: space-between;
+    background: #fff;
     padding: 20px 20px;
     background: #fff;
     border-bottom: 1px solid #E1EBED;
