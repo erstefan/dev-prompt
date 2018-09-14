@@ -54,32 +54,15 @@ export const Container = styled.div`
     color: #fff;
     text-align: center;
   }
-
-  .btn-remove-terminal {
-    float: right;
-    width: 22px;
-    border: 0;
-    height: 20px;
-    border-top-right-radius: 3px;
-    border-top-left-radius: 3px;
-    background: ${brand.primary};
-    color: #fff;
-    text-align: left;
-    font-size: 9px;
-    position: relative;
-    bottom: -2px;
-    right: 0px;
-    outline: 0;
-    cursor: pointer;
-  }
 `;
 
 export const CommandInput = styled.input`
   background: #fff !important;
-  border: 3px solid ${brand.primary} !important
+  border: 3px solid ${p => p.termColor} !important;
+  border-width: 3px !important;
   padding: 12px 20px 12px 40px !important;
-  color: ${brand.primary} !important;
-  font-family: "Operator Mono", Arial !important;
+  color: ${p => p.termColor} !important;
+  font-family: 'Operator Mono', Arial !important;
   font-weight: 600 !important;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
@@ -89,7 +72,7 @@ export const CommandInput = styled.input`
 `;
 
 export const CommandInputLabel = styled.label`
-  background: ${brand.primary};
+  background: ${p => p.termColor};
   // background: #8ec348;
   color: #ffffff !important;
   padding: 2px 8px !important;
@@ -119,4 +102,23 @@ export const FieldRow = styled.div`
     margin-top: -3px;
     color: #707177;
   }
+`;
+
+export const TermIconButton = styled.button`
+  float: right;
+  width: 22px;
+  border: 0;
+  height: 20px;
+  border-top-right-radius: 3px;
+  border-top-left-radius: 3px;
+  background: ${p => p.termColor};
+  color: #fff;
+  text-align: left;
+  font-size: 9px;
+  position: relative;
+  bottom: -2px;
+  right: 0px;
+  outline: 0;
+  cursor: pointer;
+  margin-right: ${p => p.hasMarginRight ? '2px' : ''};
 `;

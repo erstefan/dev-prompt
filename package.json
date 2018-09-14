@@ -19,6 +19,7 @@
     "history": "^4.7.2",
     "prop-types": "^15.6.2",
     "react": "16.4.0",
+    "react-color": "^2.14.1",
     "react-dom": "16.4.0",
     "react-firebaseui": "^3.0.7",
     "react-redux": "^5.0.7",
@@ -41,7 +42,6 @@
     "electron-devtools-installer": "^2.2.4",
     "electron-redux-devtools": "^0.3.4",
     "prettier": "1.14.2",
-    "react-edit-inline": "^1.0.8",
     "react-scripts": "1.1.4",
     "wait-on": "2.1.0"
   },

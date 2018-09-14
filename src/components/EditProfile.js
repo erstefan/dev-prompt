@@ -9,7 +9,6 @@ class EditProfile extends React.Component {
   render() {
     return (
       <div>
-        <AppHeader avatar={this.props.user.photoURL} />
         Edit profile
       </div>
     );

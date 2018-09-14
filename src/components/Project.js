@@ -4,12 +4,13 @@ import { deleteProject, getSingleProject } from '../actions/projectActions';
 import { Button, Form, Icon } from 'semantic-ui-react';
 import { Container, ProjectHeaderToolbar } from '../styles/project';
 import Terminal from './Terminal';
+import {brand} from "../styles/colors";
 
 class Project extends React.Component {
   state = {
     project: [],
     command: '',
-    terminals: [{ name: 'Terminal', command: '' }],
+    terminals: [{ name: 'Terminal', command: '', color: brand.primary }],
   };
 
   handleDeleteProject = () => {
@@ -40,6 +41,15 @@ class Project extends React.Component {
     this.setState({ terminals: newCommands });
   };
 
+  handleTerminalColorChange = (index, {hex}) => {
+    const newColors = this.state.terminals.map((terminal, cid) => {
+      if (index !== cid) {
+        return terminal;
+      }
+      return { ...terminal, color: hex };
+    });
+    this.setState({ terminals: newColors });
+  };
   handleRemoveTerminal = index => () => {
     console.log('remove terminal at index', index);
     this.setState({
@@ -50,7 +60,7 @@ class Project extends React.Component {
   handleAddTerminal = () => {
     this.setState({
       terminals: this.state.terminals.concat([
-        { name: 'Terminal', command: '' },
+        { name: 'Terminal', command: '', color: brand.primary },
       ]),
     });
   };
@@ -87,6 +97,7 @@ class Project extends React.Component {
                       handleRemoveTerminal={this.handleRemoveTerminal}
                       handleTerminalCommandChange={this.handleTerminalCommandChange}
                       handleTerminalNameChange={this.handleTerminalNameChange}
+                      handleTerminalColorChange={this.handleTerminalColorChange}
                     />
                   ))}
                 <Button basic size="tiny" onClick={this.handleAddTerminal}>
