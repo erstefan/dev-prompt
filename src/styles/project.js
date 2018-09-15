@@ -54,12 +54,24 @@ export const Container = styled.div`
     color: #fff;
     text-align: center;
   }
+
+  .btn-term-action {
+    display: inline-flex !important;
+    justify-content: center !important;
+    margin-right: 10px !important;
+    width: 30px;
+    i.icon {
+      margin: 0 !important;
+    }
+  }
 `;
 
 export const CommandInput = styled.input`
   background: #fff !important;
-  border: 3px solid ${p => p.termColor} !important;
-  border-width: 3px !important;
+  border-left: 2px solid ${p => p.termColor} !important;
+  border-right: 2px solid ${p => p.termColor} !important;
+  border-top: 2px solid ${p => p.termColor} !important;
+  border-bottom: 4px solid ${p => p.termColor} !important;
   padding: 12px 20px 12px 40px !important;
   color: ${p => p.termColor} !important;
   font-family: 'Operator Mono', Arial !important;
@@ -120,5 +132,5 @@ export const TermIconButton = styled.button`
   right: 0px;
   outline: 0;
   cursor: pointer;
-  margin-right: ${p => p.hasMarginRight ? '2px' : ''};
+  margin-right: ${p => (p.hasMarginRight ? '2px' : '')};
 `;

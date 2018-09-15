@@ -1,10 +1,17 @@
 import {
-  PROJECTS_GET_SINGLE, PROJECT_ADD_SUCCESS,
-  PROJECT_ADD_REQUEST, PROJECTS_SUCCESS, PROJECTS_REQUEST, PROJECT_DELETE_REQUEST, PROJECT_DELETE_SUCCESS,
-  PROJECT_DELETE_FAILURE
-} from "../constants/actionTypes";
-import {auth, db} from "../firebase/firebase";
-import {snapshotToArray} from "../utils";
+  PROJECTS_GET_SINGLE,
+  PROJECT_ADD_SUCCESS,
+  PROJECT_ADD_REQUEST,
+  PROJECTS_SUCCESS,
+  PROJECTS_REQUEST,
+  PROJECT_DELETE_REQUEST,
+  PROJECT_DELETE_SUCCESS,
+  PROJECT_DELETE_FAILURE,
+  TERMINAL_ADD_REQUEST,
+  TERMINAL_ADD_SUCCESS, TERMINAL_REMOVE,
+} from '../constants/actionTypes';
+import { auth, db } from '../firebase/firebase';
+import { snapshotToArray } from '../utils';
 
 /*************************************************
  *
@@ -12,19 +19,19 @@ import {snapshotToArray} from "../utils";
  */
 
 export const projectsGetAllRequest = () => ({
-  type: PROJECTS_REQUEST
+  type: PROJECTS_REQUEST,
 });
 
 export const projectsGetSuccess = projects => ({
   type: PROJECTS_SUCCESS,
-  payload: projects
+  payload: projects,
 });
 
 export const getSingleProject = id => ({
   type: PROJECTS_GET_SINGLE,
   payload: {
-    id
-  }
+    id,
+  },
 });
 
 /**
@@ -34,17 +41,16 @@ export const getAllProjects = () => dispatch => {
   dispatch(projectsGetAllRequest());
   let uid = auth.currentUser !== null && auth.currentUser.uid;
   const ref = db.ref(`/projects/${uid}`);
-  ref
-    .on('value', snapshot => {
-      let data = snapshot.val();
+  ref.on('value', snapshot => {
+    let data = snapshot.val();
 
-      if (!data) {
-        return dispatch(projectsGetSuccess([]));
-      }
+    if (!data) {
+      return dispatch(projectsGetSuccess([]));
+    }
 
-      let formattedData = snapshotToArray(snapshot);
-      return dispatch(projectsGetSuccess(formattedData));
-    })
+    let formattedData = snapshotToArray(snapshot);
+    return dispatch(projectsGetSuccess(formattedData));
+  });
 };
 
 /*************************************************
@@ -59,7 +65,6 @@ export const createProjectSuccess = () => ({
   type: PROJECT_ADD_SUCCESS,
 });
 
-
 /**
  * Create new project
  * @param data
@@ -67,17 +72,16 @@ export const createProjectSuccess = () => ({
 export const createProject = data => dispatch => {
   dispatch(createProjectRequest());
   let uid = auth.currentUser !== null && auth.currentUser.uid;
-  let project = {uid, ...data, createAt: Date.now()};
+  let project = { uid, ...data, createAt: Date.now() };
 
-  db
-    .ref(`/projects/${uid}`)
-    .push({...project})
+  db.ref(`/projects/${uid}`)
+    .push({ ...project })
     .then(() => {
-      dispatch(createProjectSuccess(project))
+      dispatch(createProjectSuccess(project));
     })
     .catch(err => {
       console.log('error', err);
-    })
+    });
 };
 
 /*************************************************
@@ -91,15 +95,15 @@ export const deleteProjectRequest = () => ({
 export const deleteProjectSuccess = id => ({
   type: PROJECT_DELETE_SUCCESS,
   payload: {
-    id
-  }
+    id,
+  },
 });
 
 export const deleteProjectFailure = err => ({
   type: PROJECT_DELETE_FAILURE,
   payload: {
-    err
-  }
+    err,
+  },
 });
 
 export const deleteProject = id => dispatch => {
@@ -107,8 +111,7 @@ export const deleteProject = id => dispatch => {
 
   const uid = auth.currentUser !== null && auth.currentUser.uid;
 
-  db
-    .ref(`/projects/${uid}`)
+  db.ref(`/projects/${uid}`)
     .child(id)
     .remove()
     .then(() => {
@@ -118,8 +121,66 @@ export const deleteProject = id => dispatch => {
     })
     .catch(err => {
       dispatch(deleteProjectFailure(err));
+    });
+};
+
+/**
+ * Add new command / terminal
+ */
+
+export const createTerminalCommandRequest = () => ({
+  type: TERMINAL_ADD_REQUEST,
+});
+
+export const createTerminalCommandSuccess = command => ({
+  type: TERMINAL_ADD_SUCCESS,
+  payload: {
+    ...command,
+  },
+});
+
+export const createTerminalCommand = ({ projectId, ...terminals }) => dispatch => {
+  dispatch(createTerminalCommandRequest());
+  let uid = auth.currentUser !== null && auth.currentUser.uid;
+
+
+  db.ref(`/projects/${uid}/${projectId}/terminals`)
+    .set(terminals)
+    .then(snapshot => {
+      let snap = snapshot.val();
+      let formatted = snapshotToArray(snap);
+      dispatch(createTerminalCommandSuccess(formatted));
     })
+    .catch(err => {
+      console.log('error', err);
+    });
 };
 
 
-
+/**
+ Remove terminal
+*/
+//
+// export const terminalRemove = id => ({
+//   type: TERMINAL_REMOVE,
+//   payload: {
+//     id
+//   }
+// });
+//
+// export const removeTerminal = id => dispatch => {
+//   dispatch(terminalRemove(id))
+//   let uid = auth.currentUser !== null && auth.currentUser.uid;
+//
+//
+//   db.ref(`/projects/${uid}/${projectId}/terminals`)
+//     .set({...rest})
+//     .then(snapshot => {
+//       let formatted = snapshotToArray(snapshot);
+//       dispatch(createTerminalCommandSuccess(formatted));
+//     })
+//     .catch(err => {
+//       console.log('error', err);
+//     });
+//
+// };

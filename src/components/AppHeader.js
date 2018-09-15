@@ -9,10 +9,6 @@ import * as routes from '../constants/routes';
 import { createProject } from '../actions/projectActions';
 
 class AppHeader extends React.Component {
-  constructor(props) {
-    super(props);
-  }
-
   handleCreateProject = () => {
     const { remote } = window.require('electron');
     if (this.props.loggedIn) {

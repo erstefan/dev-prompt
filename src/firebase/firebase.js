@@ -4,6 +4,7 @@ import 'firebase/database';
 import {
   config
 } from "../config";
+
 const devConfig = {
   apiKey: `${config.firebase.FIREBASE_API_KEY}`,
   authDomain: `${config.firebase.AUTH_DOMAIN}`,
@@ -34,6 +35,7 @@ if (!firebase.apps.length) {
 const auth = firebase.auth();
 const db = firebase.database();
 const fb = firebase;
+
 export {
   auth,
   githubProvider,

@@ -44,6 +44,7 @@ class Terminal extends React.Component {
 
         {/*Remove terminal button */}
         <TermIconButton
+          type="button"
           onClick={handleRemoveTerminal(index)}
           termColor={terminal.color}
         >
@@ -52,6 +53,7 @@ class Terminal extends React.Component {
 
         {/*Open color picker button*/}
         <TermIconButton
+          type="button"
           onClick={this.showColorPicker}
           hasMarginRight={true}
           termColor={terminal.color}

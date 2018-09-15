@@ -1,12 +1,11 @@
-import styled from "styled-components";
-import {brand} from "./colors";
-import {font} from "./base";
-import * as color from "color";
+import styled from 'styled-components';
+import { brand } from './colors';
+import { font } from './base';
 
 const DashboardHeader = styled.div`
   margin-top: 20px;
   height: 60px;
-  border-bottom: 1px solid #E1EBED;
+  border-bottom: 1px solid #e1ebed;
   padding: 10px 15px;
   display: flex;
   align-items: center;
@@ -18,24 +17,24 @@ const DashboardHeader = styled.div`
     font-family: 'Montserrat', Arial;
     font-weight: 700;
   }
-  
+
   .user__card {
     display: flex;
     align-items: center;
-    
+
     .user-name {
       color: #222;
     }
-    
+
     .user-photo {
       border: 1px solid #ccc;
       padding: 3px;
       border-radius: 50px;
-      display:block;
-      float:right;
+      display: block;
+      float: right;
       margin-left: 0;
       margin-left: 10px;
-      
+
       img {
         margin-left: 0 !important;
       }
@@ -52,7 +51,8 @@ const ProjectsWrapper = styled.div`
   height: 80vh;
   overflow:hidden;
   flex-direction: column;
-  justify-content: ${props => props.userHasNoProjects ? 'space-evenly' : 'flex-start'};
+  justify-content: ${props =>
+    props.userHasNoProjects ? 'space-evenly' : 'flex-start'};
   
   .intro {
     text-align: center;
@@ -108,35 +108,32 @@ const ProjectsWrapper = styled.div`
   }
 `;
 
-
 const ProjectItemStyled = styled.div`
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    background: #fff;
-    padding: 20px 20px;
-    background: #fff;
-    border-bottom: 1px solid #E1EBED;
-    cursor: pointer;
-    
-    
-    
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background: #fff;
+  padding: 20px 20px;
+  background: #fff;
+  border-bottom: 1px solid #e1ebed;
+  cursor: pointer;
+
   // old
   // border: 3px solid #E1EBED;
   // padding: 20px 20px;
   // cursor: pointer;
   // background: #fff;
-  // max-width: 95%; 
+  // max-width: 95%;
   // width: 100%;
   // margin-left: auto;
   // margin-right: auto;
   // margin-bottom: 10px;
   // box-shadow: 0 0 8px #E1EBED;
   // border-radius: 10px;
-  
+
   &:hover {
     background: #fff;
-     h3 {
+    h3 {
       color: ${brand.primary};
     }
     div.project-item:not(:hover) {
@@ -144,7 +141,7 @@ const ProjectItemStyled = styled.div`
         color: #ccc !important;
       }
     }
-   
+
     .btn-delete {
       opacity: 1;
       display: block;
@@ -158,21 +155,16 @@ const ProjectItemStyled = styled.div`
     margin-bottom: 5px;
     text-shadow: 0 1px 0 #fff;
   }
-  
+
   span.project__path {
     font-size: 12px;
     color: #aaa;
     text-shadow: 0 1px 0 #fff;
   }
-  
+
   .btn-delete {
     opacity: 0;
     display: none;
   }
-  
 `;
-export {
-  DashboardHeader,
-  ProjectsWrapper,
-  ProjectItemStyled,
-}
+export { DashboardHeader, ProjectsWrapper, ProjectItemStyled };

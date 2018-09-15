@@ -1,17 +1,9 @@
-import React from 'react';
-import AppHeader from './AppHeader';
+import React, { Component } from 'react';
 import { connect } from 'react-redux';
 
-class EditProfile extends React.Component {
-  constructor(props) {
-    super(props);
-  }
+class EditProfile extends Component {
   render() {
-    return (
-      <div>
-        Edit profile
-      </div>
-    );
+    return <div>Edit profile</div>;
   }
 }
 
