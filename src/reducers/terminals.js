@@ -1,58 +1,63 @@
-// import * as types from "../constants/actionTypes";
-//
-// export default (state = {
-//   pending: false,
-//   data: [],
-//   error: ''
-// }, action) => {
-//   switch (action.type) {
-//     case types.TERMINALS_SUCCESS:
-//       return {
-//         pending: false,
-//         data: [...action.payload]
-//       };
-//
-//     case types.TERMINAL_REQUEST:
-//       return {
-//         ...state,
-//         pending: true,
-//       };
-//
-//     case types.TERMINAL_DELETE_REQUEST:
-//       return {
-//         ...state,
-//         pending: true,
-//       };
-//     case types.TERMINAL_DELETE_SUCCESS:
-//       return {
-//         ...state,
-//         data: state.data.filter(terminal => terminal.key !== action.payload)
-//       };
-//
-//
-//     case types.TERMINAL_ADD_REQUEST:
-//       return {
-//         ...state,
-//         pending: true,
-//       };
-//     case types.TERMINAL_ADD_SUCCESS:
-//       return {
-//         pending: false,
-//         ...state
-//       };
-//
-//     case types.TERMINAL_NEW_REQUEST:
-//       return {
-//         ...state,
-//         pending: true
-//       };
-//
-//     case types.TERMINAL_NEW_REQUEST_SUCCESS:
-//       return {
-//         pending: false,
-//         ...state
-//       };
-//     default:
-//       return state;
-//   }
-// };
+import {
+  TERMINALS_FETCH_REQUEST,
+  TERMINALS_FETCH_SUCCESS,
+  TERMINAL_REMOVE_SUCCESS,
+  TERMINAL_ADD_REQUEST,
+  TERMINAL_ADD_SUCCESS,
+  TERMINAL_ADD_FAILURE,
+  TERMINALS_FETCH_FAILURE,
+} from "../constants/actionTypes";
+
+export default (
+  state = {
+    pending: false,
+    data: [],
+    error: "",
+  },
+  action,
+) => {
+  switch (action.type) {
+    case TERMINALS_FETCH_REQUEST:
+      return { ...state, pending: true };
+
+    case TERMINALS_FETCH_SUCCESS:
+      return { pending: false, data: action.payload.terminals, ...state };
+
+    case TERMINALS_FETCH_FAILURE:
+      return { ...state, pending: false, error: action.payload.error };
+
+    case TERMINAL_REMOVE_SUCCESS:
+      return {
+        ...state,
+        data: state.data.splice(action.payload.terminalIndex, 1),
+      };
+
+    case TERMINAL_ADD_REQUEST:
+      return {
+        ...state,
+        pending: true,
+      };
+    case TERMINAL_ADD_SUCCESS:
+      return {
+        ...state,
+        pending: false,
+        data: [...state.data, ...action.payload.terminals],
+      };
+    case TERMINAL_ADD_FAILURE:
+      return { ...state, pending: false, error: action.payload.error };
+
+    // case types.TERMINAL_NEW_REQUEST:
+    //   return {
+    //     ...state,
+    //     pending: true
+    //   };
+
+    // case types.TERMINAL_NEW_REQUEST_SUCCESS:
+    //   return {
+    //     pending: false,
+    //     ...state
+    //   };
+    default:
+      return state;
+  }
+};

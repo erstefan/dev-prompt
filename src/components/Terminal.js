@@ -24,6 +24,15 @@ class Terminal extends React.Component {
       showPicker: false,
     });
   };
+
+  removeTerminal = index => {
+    if (this.props.local) {
+      console.log("remove terminal from state at index " + index);
+      this.props.handleRemoveTerminal(index, true);
+    } else {
+      this.props.handleRemoveTerminal(index)
+    }
+  }
   render() {
     const {
       index,
@@ -32,59 +41,27 @@ class Terminal extends React.Component {
       handleRemoveTerminal,
       handleTerminalCommandChange,
     } = this.props;
-    return (
-      <Form.Field>
-        <InlineEdit
-          activeClassName="editing"
-          text={terminal.name}
-          paramName="name"
-          change={handleTerminalNameChange(index)}
-          style={{ ...styles.titleBar, backgroundColor: terminal.color }}
-        />
+    return <Form.Field>
+        <InlineEdit activeClassName="editing" text={terminal.name} paramName="name" change={handleTerminalNameChange(index)} style={{ ...styles.titleBar, backgroundColor: terminal.color }} />
 
         {/*Remove terminal button */}
-        <TermIconButton
-          type="button"
-          onClick={handleRemoveTerminal(index)}
-          termColor={terminal.color}
-        >
+        <TermIconButton type="button" onClick={() => this.removeTerminal(index)} termColor={terminal.color}>
           <Icon className="cancel" />
         </TermIconButton>
 
         {/*Open color picker button*/}
-        <TermIconButton
-          type="button"
-          onClick={this.showColorPicker}
-          hasMarginRight={true}
-          termColor={terminal.color}
-        >
+        <TermIconButton type="button" onClick={this.showColorPicker} hasMarginRight={true} termColor={terminal.color}>
           <Icon className="tint" />
         </TermIconButton>
 
         <FieldRow>
-          <Icon className={'terminal'} />
-          <CommandInput
-            value={terminal.command}
-            placeholder={`Command #${index + 1}`}
-            termColor={terminal.color}
-            onChange={handleTerminalCommandChange(index)}
-          />
+          <Icon className={"terminal"} />
+          <CommandInput value={terminal.command} placeholder={`Command #${index + 1}`} termColor={terminal.color} onChange={handleTerminalCommandChange(index)} />
         </FieldRow>
 
         {/*Colorpicker*/}
-        {this.state.showPicker && (
-          <TwitterPicker
-            style={{
-              position: 'absolute',
-              top: 0,
-              right: 0,
-              zIndex: 999,
-            }}
-            onChangeComplete={this.colorSelected}
-          />
-        )}
-      </Form.Field>
-    );
+        {this.state.showPicker && <TwitterPicker style={{ position: "absolute", top: 0, right: 0, zIndex: 999 }} onChangeComplete={this.colorSelected} />}
+      </Form.Field>;
   }
 }
 

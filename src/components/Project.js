@@ -1,20 +1,22 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
+import { deleteProject, getSingleProject } from "../actions/projectActions";
+import { Button, Form, Icon, Popup } from "semantic-ui-react";
+import { Container, ProjectHeaderToolbar } from "../styles/project";
+import Terminal from "./Terminal";
+import { brand } from "../styles/colors";
 import {
-  createTerminalCommand,
-  deleteProject,
-  getSingleProject,
-} from '../actions/projectActions';
-import { Button, Form, Icon, Popup } from 'semantic-ui-react';
-import { Container, ProjectHeaderToolbar } from '../styles/project';
-import Terminal from './Terminal';
-import { brand } from '../styles/colors';
+  removeTerminal,
+  addTerminal,
+  fetchTerminals,
+} from "../actions/terminalActions";
+import uuid from "uuid";
 
 class Project extends React.Component {
   state = {
     project: [],
-    command: '',
-    terminals: [{ name: 'Terminal', command: '', color: brand.primary }],
+    command: "",
+    terminals: [{ tid: uuid.v4(), name: "Terminal", command: "", color: brand.primary }],
   };
 
   handleDeleteProject = () => {
@@ -49,19 +51,34 @@ class Project extends React.Component {
     });
     this.setState({ terminals: newColors });
   };
-  
-  handleRemoveTerminal = index => () => {
+
+  handleRemoveTerminal = (terminalIndex, isLocal) => () => {
+    const projectId = this.props.match.params.id;
+    console.log("isLocal", isLocal);
+    if (!isLocal) {
+      return this.props.removeTerminal(projectId, terminalIndex);
+    }
+
+    console.log("handleRemoveTerminal", terminalIndex);
     this.setState({
-      terminals: this.state.terminals.filter((terminal, i) => index !== i),
+      terminals: this.state.terminals.filter( (term, index) => terminalIndex !== index)
     });
+    
   };
 
   handleAddTerminal = () => {
-    this.setState({
-      terminals: this.state.terminals.concat([
-        { name: 'Terminal', command: '', color: brand.primary },
-      ]),
-    });
+    let projectId = this.props.match.params.id;
+    // let term = [
+    //   ...this.state.terminals,
+    //   // { id: projectId, name: "Terminal", command: "", color: brand.primary },
+    // ];
+
+    this.setState({ terminals : [
+      ...this.state.terminals,
+      { id: projectId, name: "Terminal", command: "", color: brand.primary },
+    ]});
+
+    this.props.addTerminal(projectId, this.state.terminals);
   };
 
   handleSubmit = e => {
@@ -77,59 +94,92 @@ class Project extends React.Component {
   componentDidMount() {
     let id = this.props.match.params.id;
     this.props.getSingleProject(id);
+    this.props.fetchTerminals(id);
   }
 
   render() {
     const { project, commands } = this.props;
-    const { terminals } = this.state;
+    // const { terminals } = this.state;
+    const { terminals } = this.props;
+    // console.log("terminals", terminals);
+    console.log("project", this.state.terminals);
     return (
       <React.Fragment>
         {project ? (
           <React.Fragment>
             <ProjectHeaderToolbar>
-              <button onClick={() => this.props.history.replace('/dashboard')}>
-                <Icon className={'arrow left'} />
+              <button onClick={() => this.props.history.replace("/dashboard")}>
+                <Icon className={"arrow left"} />
               </button>
               <span>{project.projectName}</span>
               <button onClick={this.handleDeleteProject}>
-                <Icon className={'trash alternate outline'} />
+                <Icon className={"trash alternate outline"} />
               </button>
             </ProjectHeaderToolbar>
             <Container>
               <Form onSubmit={this.handleSubmit}>
-                <div style={{ marginBottom: '50px' }}>
+                <div style={{ marginBottom: "50px" }}>
                   {/*{project.commands &&*/}
-                    {/*project.commands.map((terminal, i) => (*/}
-                      {/*<Terminal*/}
-                        {/*key={i}*/}
-                        {/*index={i}*/}
-                        {/*terminal={terminal}*/}
-                        {/*handleRemoveTerminal={this.handleRemoveTerminal}*/}
-                        {/*handleTerminalCommandChange={*/}
-                          {/*this.handleTerminalCommandChange*/}
-                        {/*}*/}
-                        {/*handleTerminalNameChange={this.handleTerminalNameChange}*/}
-                        {/*handleTerminalColorChange={*/}
-                          {/*this.handleTerminalColorChange*/}
-                        {/*}*/}
-                      {/*/>*/}
-                    {/*))}*/}
-                  {terminals.map((terminal, i) => (
-                    <Terminal
-                      key={i}
-                      index={i}
-                      terminal={terminal}
-                      handleRemoveTerminal={this.handleRemoveTerminal}
-                      handleTerminalCommandChange={
-                        this.handleTerminalCommandChange
-                      }
-                      handleTerminalNameChange={this.handleTerminalNameChange}
-                      handleTerminalColorChange={this.handleTerminalColorChange}
-                    />
-                  ))}
+                  {/*project.commands.map((terminal, i) => (*/}
+                  {/*<Terminal*/}
+                  {/*key={i}*/}
+                  {/*index={i}*/}
+                  {/*terminal={terminal}*/}
+                  {/*handleRemoveTerminal={this.handleRemoveTerminal}*/}
+                  {/*handleTerminalCommandChange={*/}
+                  {/*this.handleTerminalCommandChange*/}
+                  {/*}*/}
+                  {/*handleTerminalNameChange={this.handleTerminalNameChange}*/}
+                  {/*handleTerminalColorChange={*/}
+                  {/*this.handleTerminalColorChange*/}
+                  {/*}*/}
+                  {/*/>*/}
+                  {/*))}*/}
+                  {terminals && terminals.data ? (
+                    terminals &&
+                    terminals.data.map((terminal, i) => (
+                      <Terminal
+                        key={i}
+                        index={i}
+                        terminal={terminal}
+                        handleRemoveTerminal={this.handleRemoveTerminal}
+                        handleTerminalCommandChange={
+                          this.handleTerminalCommandChange
+                        }
+                        handleTerminalNameChange={this.handleTerminalNameChange}
+                        handleTerminalColorChange={
+                          this.handleTerminalColorChange
+                        }
+                      />
+                    ))
+                  ) : (
+                    <div>
+                      <hr />
+                      <h3>Create new terminal command</h3>
+                      {this.state.terminals &&
+                        this.state.terminals.map((term, i) => (
+                          <Terminal
+                            key={i}
+                            index={i}
+                            terminal={term}
+                            local={true}
+                            handleRemoveTerminal={this.handleRemoveTerminal}
+                            handleTerminalCommandChange={
+                              this.handleTerminalCommandChange
+                            }
+                            handleTerminalNameChange={
+                              this.handleTerminalNameChange
+                            }
+                            handleTerminalColorChange={
+                              this.handleTerminalColorChange
+                            }
+                          />
+                        ))}
+                    </div>
+                  )}
                 </div>
 
-                <div style={{ marginTop: '15px', display: 'block' }}>
+                <div style={{ marginTop: "15px", display: "block" }}>
                   <Popup
                     style={{ zIndex: 9999 }}
                     trigger={
@@ -140,7 +190,7 @@ class Project extends React.Component {
                         size="tiny"
                         onClick={this.handleAddTerminal}
                       >
-                        <Icon className={'plus'} />
+                        <Icon className={"plus"} />
                       </Button>
                     }
                     content="Create new terminal"
@@ -161,7 +211,7 @@ class Project extends React.Component {
 
                   <Button
                     type="button"
-                    style={{ backgroundColor: brand.primary, color: '#fff' }}
+                    style={{ backgroundColor: brand.primary, color: "#fff" }}
                     size="tiny"
                   >
                     <Icon className="play" /> RUN ALL
@@ -180,10 +230,17 @@ class Project extends React.Component {
 
 const mapStateToProps = state => ({
   project: state.projects.data[0],
+  terminals: state.terminals.data,
   user: state.user.user,
 });
 
 export default connect(
   mapStateToProps,
-  { deleteProject, getSingleProject, createTerminalCommand },
+  {
+    deleteProject,
+    getSingleProject,
+    removeTerminal,
+    addTerminal,
+    fetchTerminals,
+  },
 )(Project);

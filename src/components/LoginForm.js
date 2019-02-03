@@ -12,6 +12,7 @@ const LoginForm = ({ history, loginUser }) => {
     callbacks: {
       signInSuccessWithAuthResult: res => {
         loginUser(history, res.user);
+        console.log('LOGIN USER', res);
       },
     },
   };
