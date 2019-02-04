@@ -117,7 +117,7 @@ export const deleteProject = id => dispatch => {
     .child(id)
     .remove()
     .then(() => {
-      return dispatch(deleteProjectSuccess(id))
+      setTimeout(() => dispatch(deleteProjectSuccess(id)), 500)
     })
     .catch(err => {
       dispatch(deleteProjectFailure(err))

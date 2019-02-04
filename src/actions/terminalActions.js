@@ -38,7 +38,6 @@ export const fetchTerminals = projectId => dispatch => {
   dispatch(terminalsFetchRequest());
   db.ref(`/terminals/${projectId}/terms`).once("value", snap => {
     if (snap) {
-      // console.log('SNAP', snap.val())
       let formatted = snapshotToArray(snap);
       return dispatch(terminalAddSuccess(formatted));
     }

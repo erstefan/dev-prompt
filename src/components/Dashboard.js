@@ -58,7 +58,7 @@ class Dashboard extends Component {
             justifyContent: `${noProjects ? 'space-evenly' : 'flex-start'}`,
           }}
         >
-          {projects.pending ? (
+          {user.pending ? (
             <DashboardLoader />
           ) : (
             <React.Fragment>
