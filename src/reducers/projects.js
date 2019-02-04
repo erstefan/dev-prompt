@@ -64,6 +64,10 @@ export default (
       return {
         ...state,
         pending: false,
+        data: [
+          ...state.data,
+          {...action.payload}
+        ]
       }
     default:
       return state

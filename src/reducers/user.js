@@ -18,11 +18,7 @@ const userReducer = (state = initialState, action) => {
         ...state,
         error: '',
         loggedIn: true,
-        user: {
-          name: action.payload.name,
-          photoURL: action.payload.photoURL,
-          email: action.payload.email
-        }
+        user: {...action.payload}
     };
     case actions.LOGIN_ERROR:
       return {...state, fetching: false, error: action.error};

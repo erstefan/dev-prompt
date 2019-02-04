@@ -36,11 +36,11 @@ export const terminalFetchFailure = error => ({
 
 export const fetchTerminals = projectId => dispatch => {
   dispatch(terminalsFetchRequest());
-  db.ref(`/terminals/${projectId}/terms`).on("value", snap => {
+  db.ref(`/terminals/${projectId}/terms`).once("value", snap => {
     if (snap) {
-      console.log('SNAP', snap.val())
-      // let formatted = snapshotToArray(snap);
-      // return dispatch(terminalAddSuccess(formatted));
+      // console.log('SNAP', snap.val())
+      let formatted = snapshotToArray(snap);
+      return dispatch(terminalAddSuccess(formatted));
     }
 
     dispatch(terminalFetchFailure({ message: "Something went wrong." }));
@@ -105,21 +105,26 @@ export const terminalAddSuccess = (projectId, terminals) => ({
   payload: { projectId, terminals },
 });
 
-export const addTerminal = (projectId, terminals) => dispatch => {
-  dispatch(terminalAddRequest());
-  console.log("addTerminalAction", terminals);
-  dispatch(terminalAddSuccess(projectId, terminals));
+export const addTerminal = (projectId, terminals) => (dispatch, getState) => {
+  const { user } = getState();
+  const uid = user.user.uid;
 
-  // db.ref(`/terminals/${projectId}`)
-  //   .child("terms")
-  //   .set({ ...terminals })
-  //   .then(() => {
-  //     db.once("value").then(snapshot => {
-  //       let formatted = snapshotToArray(snapshot);
-  //       dispatch(terminalAddSuccess(formatted));
-  //     });
-  //   })
-  //   .catch(err => {
-  //     console.log("error creating new terminals", err);
-  //   });
+  dispatch(terminalAddRequest());
+  // dispatch(terminalAddSuccess(projectId, terminals));
+
+  db.ref(`/terminals/${projectId}`)
+    .child("terms")
+    .push({ ...terminals })
+    .then(() => {
+      db.ref(`/projects/${uid}`).once("value").then(snapshot => {
+        let formatted = snapshotToArray(snapshot);
+        console.log('-------------- snapshot')
+        console.log(formatted)
+        console.log('--------------')
+        dispatch(terminalAddSuccess(formatted));
+      });
+    })
+    .catch(err => {
+      console.log("error creating new terminals", err);
+    });
 };

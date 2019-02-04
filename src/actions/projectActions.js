@@ -61,8 +61,9 @@ export const createProjectRequest = () => ({
   type: PROJECT_ADD_REQUEST,
 })
 
-export const createProjectSuccess = () => ({
+export const createProjectSuccess = project => ({
   type: PROJECT_ADD_SUCCESS,
+  payload: project
 })
 
 /**
@@ -76,7 +77,10 @@ export const createProject = data => dispatch => {
 
   db.ref(`/projects/${uid}`)
     .push({ ...project })
-    .then(() => dispatch(createProjectSuccess()))
+    .then(async snapshot => {
+      project.key = await snapshot.key;
+      return dispatch(createProjectSuccess(project))
+    })
     .catch(err => {
       console.log('error', err)
     })
