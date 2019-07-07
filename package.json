@@ -1,7 +1,7 @@
 {
   "name": "dev-prompt",
   "description": "DevPrompt",
-  "author": "Kitze",
+  "author": "Stefan Rusu",
   "version": "0.2.7",
   "private": true,
   "dependencies": {
@@ -18,9 +18,9 @@
     "firebaseui": "^3.4.0",
     "history": "^4.7.2",
     "prop-types": "^15.6.2",
-    "react": "16.4.0",
+    "react": "^16.8.6",
     "react-color": "^2.14.1",
-    "react-dom": "16.4.0",
+    "react-dom": "^16.8.6",
     "react-firebaseui": "^3.0.7",
     "react-redux": "^5.0.7",
     "react-router-dom": "^4.3.1",

@@ -38,6 +38,7 @@ export default (
         pending: true,
       };
     case TERMINAL_ADD_SUCCESS:
+      console.log('TERMINAL__ADD__SUCCESS', action)
       return {
         ...state,
         pending: false,

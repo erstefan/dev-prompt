@@ -61,12 +61,13 @@ export default (
         pending: true,
       }
     case PROJECT_ADD_SUCCESS:
+      console.log('PROJECTS ADD SUCCESS', action);
       return {
         ...state,
         pending: false,
         data: [
           ...state.data,
-          {...action.payload}
+          ...action.payload
         ]
       }
     default:

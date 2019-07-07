@@ -28,7 +28,7 @@ class Project extends React.Component {
 
   handleTerminalNameChange = (idx, target) => ({ name }) => {
     const newTerminals = this.state.terminals.map((terminal, i) => {
-      if (idx !== i) return terminal
+      if(idx !== i) return terminal
       return { ...terminal, name }
     })
     this.setState({ terminals: newTerminals })
@@ -36,7 +36,7 @@ class Project extends React.Component {
 
   handleTerminalCommandChange = idx => e => {
     const newCommands = this.state.terminals.map((terminal, cidx) => {
-      if (idx !== cidx) {
+      if(idx !== cidx) {
         return terminal
       }
       return { ...terminal, command: e.target.value }
@@ -46,7 +46,7 @@ class Project extends React.Component {
 
   handleTerminalColorChange = (index, { hex }) => {
     const newColors = this.state.terminals.map((terminal, cid) => {
-      if (index !== cid) {
+      if(index !== cid) {
         return terminal
       }
       return { ...terminal, color: hex }
@@ -57,7 +57,7 @@ class Project extends React.Component {
   handleRemoveTerminal = (terminalIndex, isLocal) => () => {
     const projectId = this.props.match.params.id
     console.log('isLocal', isLocal)
-    if (!isLocal) {
+    if(!isLocal) {
       return this.props.removeTerminal(projectId, terminalIndex)
     }
 
@@ -114,11 +114,11 @@ class Project extends React.Component {
           <React.Fragment>
             <ProjectHeaderToolbar>
               <button onClick={() => this.props.history.replace('/dashboard')}>
-                <Icon className={'arrow left'} />
+                <Icon className={'arrow left'}/>
               </button>
               <span>{project.projectName}</span>
               <button onClick={this.handleDeleteProject}>
-                <Icon className={'trash alternate outline'} />
+                <Icon className={'trash alternate outline'}/>
               </button>
             </ProjectHeaderToolbar>
             <Container>
@@ -159,27 +159,26 @@ class Project extends React.Component {
                     ))
                   ) : (
                     <div>
-                      <hr />
                       <h3>Create new terminal command</h3>
                       {this.state.terminals &&
-                        this.state.terminals.map((term, i) => (
-                          <Terminal
-                            key={i}
-                            index={i}
-                            terminal={term}
-                            local={true}
-                            handleRemoveTerminal={this.handleRemoveTerminal}
-                            handleTerminalCommandChange={
-                              this.handleTerminalCommandChange
-                            }
-                            handleTerminalNameChange={
-                              this.handleTerminalNameChange
-                            }
-                            handleTerminalColorChange={
-                              this.handleTerminalColorChange
-                            }
-                          />
-                        ))}
+                      this.state.terminals.map((term, i) => (
+                        <Terminal
+                          key={i}
+                          index={i}
+                          terminal={term}
+                          local={true}
+                          handleRemoveTerminal={this.handleRemoveTerminal}
+                          handleTerminalCommandChange={
+                            this.handleTerminalCommandChange
+                          }
+                          handleTerminalNameChange={
+                            this.handleTerminalNameChange
+                          }
+                          handleTerminalColorChange={
+                            this.handleTerminalColorChange
+                          }
+                        />
+                      ))}
                     </div>
                   )}
                 </div>
@@ -195,7 +194,7 @@ class Project extends React.Component {
                         size="tiny"
                         onClick={this.handleAddTerminal}
                       >
-                        <Icon className={'plus'} />
+                        <Icon className={'plus'}/>
                       </Button>
                     }
                     content="Create new terminal"
@@ -209,7 +208,7 @@ class Project extends React.Component {
                         basic
                         size="tiny"
                       >
-                        <Icon className="save" />
+                        <Icon className="save"/>
                       </Button>
                     }
                   />
@@ -219,7 +218,7 @@ class Project extends React.Component {
                     style={{ backgroundColor: brand.primary, color: '#fff' }}
                     size="tiny"
                   >
-                    <Icon className="play" /> RUN ALL
+                    <Icon className="play"/> RUN ALL
                   </Button>
                 </div>
               </Form>

@@ -9,15 +9,18 @@ import {
   getAllProjects,
 } from '../actions/projectActions'
 import DashboardLoader from '../DashboardLoader'
-const { dialog } = window.require('electron').remote
 
 class Dashboard extends Component {
+  state = {
+    pending: false
+  }
+
   handleAddProject = () => {
     const { remote } = window.require('electron')
     const pathArray = remote.dialog.showOpenDialog({
       properties: ['openDirectory'],
     })
-    if (pathArray) {
+    if(pathArray) {
       let split = pathArray[0].split('/'),
         folderName = split[split.length - 1]
 
@@ -34,19 +37,6 @@ class Dashboard extends Component {
     // this.props.getAllProjects();
   }
 
-  handleDeleteProject = projectID => {
-    const dialogOptions = {
-      type: 'info',
-      buttons: ['OK', 'Nope'],
-      message: 'Are you sure?',
-    }
-
-    dialog.showMessageBox(dialogOptions, ok => {
-      if (ok == 0) this.props.deleteProject(projectID)
-      return;
-    })
-  }
-
   render() {
     const { user, projects, history } = this.props
     const noProjects = projects.data && projects.data.length < 1
@@ -59,7 +49,7 @@ class Dashboard extends Component {
           }}
         >
           {user.pending ? (
-            <DashboardLoader />
+            <DashboardLoader/>
           ) : (
             <React.Fragment>
               <DashboardIntro
@@ -68,15 +58,15 @@ class Dashboard extends Component {
                 noProjects={noProjects}
               />
               {projects.data.length > 0 &&
-                projects.data.map(project => (
-                  <ProjectItem
-                    project={project}
-                    pending={projects.pending}
-                    key={project.key}
-                    handleDelete={() => this.handleDeleteProject(project.key)}
-                    history={history}
-                  />
-                ))}
+              projects.data.map(project => (
+                <ProjectItem
+                  project={project}
+                  pending={this.state.pending}
+                  key={project.key}
+                  handleDelete={this.props.deleteProject}
+                  history={history}
+                />
+              ))}
             </React.Fragment>
           )}
         </ProjectsWrapper>

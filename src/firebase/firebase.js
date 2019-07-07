@@ -1,7 +1,7 @@
-import * as firebase from 'firebase/app';
-import 'firebase/auth';
-import 'firebase/database';
-import {config} from "../config";
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
+import { config } from "../config";
 
 const devConfig = {
   apiKey: `${config.firebase.FIREBASE_API_KEY}`,
@@ -12,13 +12,16 @@ const devConfig = {
   messagingSenderId: `${config.firebase.MESSAGING_SENDER_ID}`
 };
 
-const prodConfig = {
+const prodConfig = {};
 
-};
-
-if (!firebase.apps.length) {
+if(!firebase.apps.length) {
   firebase.initializeApp(devConfig);
 }
+console.log('fbbbb', firebase.default.auth())
+const auth = firebase.default.auth();
+const db = firebase.default.database();
+const fb = firebase;
+
 const githubProvider = new firebase.auth.GithubAuthProvider();
 // var provider = new firebase.auth.GithubAuthProvider();
 
@@ -26,13 +29,7 @@ const conf = process.env.NODE_ENV === 'production' ?
   prodConfig :
   devConfig;
 
-if (!firebase.apps.length) {
-  firebase.initializeApp(conf);
-}
 
-const auth = firebase.auth();
-const db = firebase.database();
-const fb = firebase;
 
 export {
   auth,

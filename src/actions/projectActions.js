@@ -73,7 +73,7 @@ export const createProjectSuccess = project => ({
 export const createProject = data => dispatch => {
   dispatch(createProjectRequest())
   let uid = auth.currentUser !== null && auth.currentUser.uid
-  let project = { uid, ...data, createAt: Date.now() }
+  let project = { uid, ...data, terms: [], createAt: Date.now() }
 
   db.ref(`/projects/${uid}`)
     .push({ ...project })
@@ -113,13 +113,21 @@ export const deleteProject = id => dispatch => {
 
   const uid = auth.currentUser !== null && auth.currentUser.uid
 
-  db.ref(`/projects/${uid}`)
-    .child(id)
-    .remove()
-    .then(() => {
-      setTimeout(() => dispatch(deleteProjectSuccess(id)), 500)
-    })
-    .catch(err => {
-      dispatch(deleteProjectFailure(err))
-    })
+  return new Promise((resolve, reject) => {
+    db.ref(`/projects/${uid}`)
+      .child(id)
+      .remove()
+      .then(() => {
+        setTimeout(() => {
+          dispatch(deleteProjectSuccess(id))
+          resolve()
+        }, 500)
+
+      })
+      .catch(err => {
+        dispatch(deleteProjectFailure(err))
+        reject(err)
+      })
+  })
+
 }
