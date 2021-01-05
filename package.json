@@ -7,7 +7,7 @@
   "dependencies": {
     "@firebase/app": "latest",
     "@firebase/auth": "latest",
-    "axios": "^0.18.0",
+    "axios": "^0.21.1",
     "connected-react-router": "^4.4.1",
     "cross-env": "5.1.6",
     "electron-is-dev": "0.3.0",
